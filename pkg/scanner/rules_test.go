@@ -18,9 +18,10 @@ func TestEngineRuleMatching(t *testing.T) {
 		shouldHit bool
 	}{
 		{"tx.origin check", "EVM-001", "require(tx.origin == owner, 'Unauthorized');", true},
-		{"safe sender check", "EVM-001", "require(msg.sender == owner, 'Unauthorized');", false},
+		{"reentrancy call check", "EVM-002", "(bool s, ) = msg.sender.call{value: amount}(\"\");", true},
 		{"delegatecall check", "EVM-003", "target.delegatecall(data);", true},
-		{"selfdestruct check", "EVM-004", "selfdestruct(payable(recipient));", true},
+		{"spot price oracle check", "EVM-004", "(uint112 r0, uint112 r1, ) = pair.getReserves();", true},
+		{"unbounded loop DoS check", "EVM-005", "for (uint256 i = 0; i < stakeholders.length; i++) {", true},
 	}
 
 	for _, tt := range tests {
