@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.17;
 
+/**
+ * @title VulnerableVault (Test Harness)
+ * @dev Intentionally vulnerable mock contract for EVM-Sentinel static analysis tests.
+ */
 contract VulnerableVault {
     address public owner;
 
@@ -9,12 +13,16 @@ contract VulnerableVault {
     }
 
     function transferOwnership(address newOwner) public {
+        // Triggers EVM-001 (tx.origin authentication vector)
         require(tx.origin == owner, "Only owner");
         owner = newOwner;
     }
 
     function emergencyDrain(address payable recipient) public {
         require(msg.sender == owner, "Only owner");
-        selfdestruct(recipient);
+        // Triggers EVM-004 (Dangerous selfdestruct)
+        assembly {
+            selfdestruct(recipient)
+        }
     }
 }

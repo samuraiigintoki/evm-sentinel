@@ -110,5 +110,10 @@ func (e *Engine) scanFile(filePath string) []Issue {
 		lineNum++
 	}
 
+	// Fixes the scannererr warning:
+	if err := scanner.Err(); err != nil {
+		return issues
+	}
+
 	return issues
 }
