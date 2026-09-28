@@ -16,6 +16,7 @@ A high-performance static security analysis tool for Solidity smart contracts, b
 | `EVM-004` | Selfdestruct Usage | Critical | Flags use of deprecated and risky `selfdestruct` opcode |
 | `EVM-005` | Timestamp Dependence | Low | Flags reliance on `block.timestamp` for game logic |
 
+
 ## Installation & Usage
 ```bash
 go build -o evm-sentinel cmd/evmsentinel/main.go
