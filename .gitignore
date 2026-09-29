@@ -1,0 +1,12 @@
+# Binaries
+bin/
+evm-sentinel
+
+# Test & coverage
+*.out
+*.test
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
